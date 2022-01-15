@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+<?php
+//  session_start();
+if( session_status() == 1 )
+   session_start();
+?>
 <?php
 include 'components/_db_connect.php';
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -35,7 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     <?php
     $i = 2;
-    $sql = "SELECT * FROM `Faculty_Details` WHERE Department_Id='$deptid' ";
+    $category=$_GET['category'];
+    $sql = "SELECT * FROM `Faculty_Details` WHERE Department_Id='$deptid' and category='$category' ";
     $result = mysqli_query($conn, $sql);
     $numofrow = mysqli_num_rows($result);
     ?>
@@ -47,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         <a class="nav-link " href="<?php echo 'departmentdetail.php?deptname=' . $deptname; ?>">About <?php echo $_GET['deptname']; ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="true" href="<?php echo $_SERVER['PHP_SELF'] . '?deptname=' . $deptname; ?>">Faculties of <?php echo $_GET['deptname']; ?></a>
+                        <a class="nav-link active" aria-current="true" href="<?php echo $_SERVER['PHP_SELF'] . '?deptname=' . $deptname; ?>"><?php echo strtoupper($_GET['category']); ?> of <?php echo $_GET['deptname']; ?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled">Disabled</a>
@@ -84,12 +89,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         <div class="container marketing my-3">
                             <div class="row featurette">
                                 <div class=" col-md-7">
-                                <h2 align='center' class="featurette-heading"><?php echo $row['Faculty_Name']; ?>
-                                            <p align='center' class="lead">Designation: <?php echo $row['designation']; ?></p>
-                                            <p align='center' class="lead">Experience: <?php echo $row['experience']; ?> Years</p>
-                                            <p align='' class="lead">Intrest Of Fields: <?php echo $row['intrest']; ?></p>
-                                            <p align='center' class="lead">Qualification: <?php echo $row['qualification']; ?></p>
-                                            <p align='center'><a class="btn btn-secondary" href="/bootproject/facultydetail.php?facultyname=<?php echo $row['Faculty_Name']; ?>">See more»</a></p>
+                                    <h2 align='center' class="featurette-heading"><?php echo $row['Faculty_Name']; ?>
+                                        <p align='center' class="lead">Designation: <?php echo $row['designation']; ?></p>
+                                        <p align='center' class="lead">Experience: <?php echo $row['experience']; ?> Years</p>
+                                        <p align='' class="lead">Intrest Of Fields: <?php echo $row['intrest']; ?></p>
+                                        <p align='center' class="lead">Qualification: <?php echo $row['qualification']; ?></p>
+                                        <p align='center'><a class="btn btn-secondary" href="/bootproject/facultydetail.php?facultyname=<?php echo $row['Faculty_Name']; ?>">See more»</a></p>
                                 </div>
                                 <div class="col-md-5">
                                     <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="250" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 250x250" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -105,6 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 } ?>
             </div>
         </div>
+
+        <hr class="my-4">
+        <a class="btn btn-outline-warning btn-lg mx-3" href="index.php" role="button">Go to Home Page</a>
+        <hr class="my-4">
     </div>
     <?php include "components/_footer.php"; ?>
 

@@ -1,5 +1,7 @@
 <?php
-session_start();
+// session_start();
+if (session_status() == 1)
+    session_start();
 include 'components/_db_connect.php';
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $deptname = $_GET['deptname'];
@@ -41,67 +43,66 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $row = mysqli_fetch_assoc($result);
     ?>
     <div class="container">
-                <!-- MultiPage Layout For department info and faculty details -->
-            <div class="card text-center">
-                <div class="card-header">
-                    <ul class="nav nav-tabs card-header-tabs">
-                        <li class="nav-item">
-                            <!-- if you click here you will be redirected on same page with dept info in url -->
-                            
-                            <a class="nav-link active" aria-current="true" href="<?php echo $_SERVER['PHP_SELF'].'?deptname='.$row["dept_name"]; ?>">About <?php echo $row['dept_name']; ?></a>
-                        </li>
-                        <li class="nav-item">
-                            <!-- if you click here you will be redirected on people page with dept info in url and will show only dept related faculty-->
-                            <a class="nav-link" href="<?php echo "people.php".'?deptname='.$row["dept_name"]; ?>">Faculties of <?php echo $row['dept_name']; ?></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled">Disabled</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card-body">
-                    <h1 class="card-title"><?php echo $row['dept_name']; ?></h1>
-                    <?php
-                    if (isset($_SESSION['role']) && ($_SESSION['role'] == 'admin')) { ?>
-                        <p class="lead">
-                            <a class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editdeptname" role="button"><button type="button" class="btn btn-outline-primary">edit <?php echo $row['dept_name']; ?></button></a>
-                        </p>
-                    <?php
-                    }
-                    ?>
+        <!-- MultiPage Layout For department info and faculty details -->
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <!-- if you click here you will be redirected on same page with dept info in url -->
 
-
-                    <?php slider(); ?>
-                </div>
-                <p class="lead mx-3"><?php echo $row['dept_desc']; ?></p>
-
-
-
+                        <a class="nav-link active" aria-current="true" href="<?php echo $_SERVER['PHP_SELF'] . '?deptname=' . $row["dept_name"]; ?>">About <?php echo $row['dept_name']; ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- if you click here you will be redirected on people page with dept info in url and will show only dept related faculty-->
+                        <a class="nav-link" href="<?php echo "people.php" . '?deptname=' . $row["dept_name"]; ?>">Faculties of <?php echo $row['dept_name']; ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">Disabled</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title"><?php echo $row['dept_name']; ?></h1>
                 <?php
                 if (isset($_SESSION['role']) && ($_SESSION['role'] == 'admin')) { ?>
                     <p class="lead">
-                        <a class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editdeptdesc" role="button"><button type="button" class="btn btn-outline-primary">Edit the description of <?php echo $row['dept_name']; ?> </button>
-                        </a>
+                        <a class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editdeptname" role="button"><button type="button" class="btn btn-outline-primary">edit <?php echo $row['dept_name']; ?></button></a>
                     </p>
                 <?php
                 }
                 ?>
-                </div>
-                <hr class="my-4">
-                <a class="btn btn-outline-warning btn-lg mx-3" href="index.php" role="button">Go to Home Page</a>
-                <!--</div>-->
-                <hr class="my-4">
+
+
+                <?php slider(); ?>
             </div>
+            <p class="lead mx-3"><?php echo $row['dept_desc']; ?></p>
+
+
+
+            <?php
+            if (isset($_SESSION['role']) && ($_SESSION['role'] == 'admin')) { ?>
+                <p class="lead">
+                    <a class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editdeptdesc" role="button"><button type="button" class="btn btn-outline-primary">Edit the description of <?php echo $row['dept_name']; ?> </button>
+                    </a>
+                </p>
+            <?php
+            }
+            ?>
         </div>
+        <hr class="my-4">
+        <a class="btn btn-outline-warning btn-lg mx-3" href="index.php" role="button">Go to Home Page</a>
+        <hr class="my-4">
+    </div>
+    </div>
 
-            <?php include "components/_footer.php"; ?>
-            <!-- Optional JavaScript; choose one of the two! -->
+    <?php include "components/_footer.php"; ?>
+    <!-- Optional JavaScript; choose one of the two! -->
 
-            <!-- Option 1: Bootstrap Bundle with Popper -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 
-            <!-- Option 2: Separate Popper and Bootstrap JS -->
-            <!--
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
 -->

@@ -1,5 +1,7 @@
 <?php
-session_start();
+// session_start();
+if( session_status() == 1 )
+   session_start();
 $session    = session_id();
 $time       = time();
 $time_check = $time-300;     //We Have Set Time 5 Minutes
@@ -36,4 +38,3 @@ $result4 = mysqli_query($conn, $sql4);
 
 //To see the result run this script in multiple browser.
 mysqli_close($conn);
-?>

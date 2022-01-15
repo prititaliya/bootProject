@@ -1,24 +1,27 @@
 <?php
-$isAdmin=false;
+$isAdmin = false;
 
-session_start();
+// session_start();
+if (session_status() == 1)
+    session_start();
 include "_db_connect.php";
 
-if ($_SESSION['role']=='admin'){
-    $username=$_GET['username'];
-    $role=$_GET['role'];
-    $sql="SELECT * FROM `userrole` WHERE username='$username'";
-    $result=mysqli_query($conn,$sql);
-    $numofrow=mysqli_num_rows($result);
-    $row=mysqli_fetch_assoc($result);
-    if ($row['role']=='admin'){
-        $isAdmin=true;
+if ($_SESSION['role'] == 'admin') {
+    $username = $_GET['username'];
+    $role = $_GET['role'];
+    $sql = "SELECT * FROM `userrole` WHERE username='$username'";
+    $result = mysqli_query($conn, $sql);
+    $numofrow = mysqli_num_rows($result);
+    $row = mysqli_fetch_assoc($result);
+    if ($row['role'] == 'admin') {
+        $isAdmin = true;
     }
 }
 
 ?>
 <!doctype html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -29,25 +32,27 @@ if ($_SESSION['role']=='admin'){
 
     <title>Hello, world!</title>
 </head>
+
 <body>
 
-<?php include "_header.php";  ?>
-<?php
-if ($isAdmin){
-    echo '';
-}
-?>
+    <?php include "_header.php";  ?>
+    <?php
+    if ($isAdmin) {
+        echo '';
+    }
+    ?>
 
-<?php include '_footer.php';  ?>
-<!-- Optional JavaScript; choose one of the two! -->
+    <?php include '_footer.php';  ?>
+    <!-- Optional JavaScript; choose one of the two! -->
 
-<!-- Option 1: Bootstrap Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 
-<!-- Option 2: Separate Popper and Bootstrap JS -->
-<!--
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
 -->
 </body>
+
 </html>

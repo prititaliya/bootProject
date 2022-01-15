@@ -1,6 +1,6 @@
 <?php
 $showerror=false;
-if ($_SERVER['REQUEST_METHOD']=='POST'){
+if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['signup'])){
     include '_db_connect.php';
 //    $snom=$_POST['snom'];
     $username=$_POST['username'];
@@ -85,7 +85,7 @@ if ($showerror){
         <input type="password" name="cpassword" class="form-control" id="cpassword">
     </div>
 
-    <button type="submit" name="submit" class="btn btn-primary">sign up </button>
+    <button type="submit" name="signup" class="btn btn-primary">sign up </button>
     <a href="/bootproject/index.php">without login</a>
 </form>
 
