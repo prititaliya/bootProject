@@ -54,17 +54,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     </li>
                     <li class="nav-item">
                         <!-- if you click here you will be redirected on people page with dept info in url and will show only dept related faculty-->
-                        <a class="nav-link" href="<?php echo "people.php" . '?deptname=' . $row["dept_name"]."&category=faculty"; ?>">Faculties of <?php echo $row['dept_name']; ?></a>
-                       
+                        <a class="nav-link" href="<?php echo "people.php" . '?deptname=' . $row["dept_name"] . "&category=faculty"; ?>">Faculties of <?php echo $row['dept_name']; ?></a>
+
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="<?php echo "people.php" . '?deptname=' . $row["dept_name"]."&category=staff"; ?>">staff of <?php echo $row['dept_name']; ?></a>
+                        <a class="nav-link" href="<?php echo "people.php" . '?deptname=' . $row["dept_name"] . "&category=staff"; ?>">staff of <?php echo $row['dept_name']; ?></a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="<?php echo "departmentLabs.php" . '?deptname=' . $row['dept_name']; ?>">Labs for <?php echo $_GET['deptname']; ?></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
+                        <a class="nav-link" href="<?php echo "departmentLabs.php" . '?deptId=' . $row['dept_id']; ?>">Labs </a>
                     </li>
                 </ul>
             </div>
@@ -82,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
                 <?php slider(); ?>
             </div>
-            <p class="lead mx-3"><?php echo $row['dept_desc']; ?></p>
+            <p class="lead mx-3" style="text-align: left;"><?php echo $row['dept_desc']; ?></p>
 
 
 

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'components/_header.php';
 ?>
 
@@ -19,30 +20,34 @@ include 'components/_header.php';
 </head>
 
 <body>
-    <?php include 'components/_db_connect.php';
-    $sql = "SELECT * FROM tb_dept";
-    $result = mysqli_query($conn, $sql);
-    $numofrow = mysqli_num_rows($result);
-    ?>
-    <?php echo '<div class="row">
-        <div id="list-example" class="list-group col-2">';
+    <div class="container my-3">
+        <h2>About College</h2>
+        <hr class="my-4">
+        <p>Dr. S & S. S. Ghandhy College of Engineering & Technology is situated at heart of SURAT, the second largest city of Gujarat State. This Institute is one of the oldest and largest Technical Institution of Gujarat. It was established in June 1955. The donor late Dr. SORABJI & SAROSH SORABJI GHANDHY, a local Medical Practitioner, was the Prime Driving Force behind the establishment of this Institute, who donated Rs. 0.52 million in the year of 1952. Actually, he had a dream of starting a Degree Engineering College, not just a Polytechnic and so, he named the college as Dr. S. & S. S. GHANDHY COLLEGE OF ENGINEERING & TECHNOLOGY. Later on, The Government of Bombay State acquired the land building and equipments at the cost of Rs. 0.605 Million. Currently, the institute is administered by Directorate of Technical Education (DTE), Govt of Gujarat. All the programmes of the institute are AICTE approved and the institute is affiliated to Gujarat Technological University (GTU), Chandkheda, Gujarat.
+        </p>
 
-    while ($row = mysqli_fetch_assoc($result)) {
-        echo '<a class="list-group-item list-group-item-action" href="#list-item-'.$row['dept_id']. '">' . $row['dept_name'].'.'.$row['dept_id'] . '</a>';
-    }
-    echo '</div>';
-    $result = mysqli_query($conn, $sql);
-    echo '<div data-bs-spy="scroll" style="height: 500px; overflow-y:scroll;" data-bs-target="#list-example" data-bs-offset="0" class="scrollspy-example col" tabindex="0">';
-    while($row=mysqli_fetch_assoc($result)){
-        echo '<h4 id="list-item-'.$row['dept_id'].'">'.$row['dept_name'].$row['dept_id'].'</h4>
-        <p>
-        '.substr($row['dept_desc'],0,1000).'....
-        </p>';?>
-          <p><a class="btn btn-secondary" href="departmentdetail.php?deptname=<?php echo $row['dept_name']; ?>">Read more»</a></p>
-         <?php 
-    }
-        ?>
-    
+        <h4 style="text-align: center;" class="my-2">Vision</h4>
+        <p style="font-size: 20px;">“To be a unique center of excellence in technical education & innovation for sustainable growth of industry and society.”</p>
+        <h4 style="text-align: center;" class="my-2">mission</h4>
+        <ol>
+            <li>
+                <p>To impart globally viable technical core competencies and skills.
+                </p>
+            </li>
+            <li>
+                <p>To respond effectively to the ever changing needs of industry and community at large.
+                </p>
+            </li>
+            <li>
+                <p>To promote conducive campus environment and resources for qualitative education and innovation. 
+                </p>
+            </li>
+            <li>
+                <p>To inculcate moral, ethical and professional values amongst all internal stakeholders.
+                </p>
+            </li>
+        </ol>
+    </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

@@ -66,10 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         ?> " aria-current="true" href="<?php echo $_SERVER['PHP_SELF'] . '?deptname=' . $deptname."&category=staff"; ?>">STAFF of <?php echo $_GET['deptname']; ?></a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="<?php echo "departmentLabs.php" . '?deptname=' . $_GET['deptname']; ?>">Labs for <?php echo $_GET['deptname']; ?></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
+                    <a class="nav-link" href="<?php echo "departmentLabs.php" . '?deptId=' . $row['dept_id']; ?>">Labs </a>
                     </li>
                 </ul>
             </div>

@@ -3,6 +3,30 @@
 if (session_status() == 1)
     session_start();
 ?>
+<?php
+if (isset($_POST['submitForm']) && $_SERVER['REQUEST_METHOD'] == "POST") {
+    $username = $_POST['username'];
+    $useremail = $_POST['email'];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
+
+    include 'components/_db_connect.php';
+
+
+    $sql = "INSERT INTO `contactUsForm` ( `userName`, `userEmail`, `subject`, `message`) VALUES ('$username', '$useremail', '$subject', '$message')";
+    $result = mysqli_query($conn, $sql);
+    if (!$result) {
+        echo mysqli_error($conn);
+        echo $sql;
+        $showerror = "something went wrong";
+    } else {
+        //                header("Location:/bootproject/department.php?justsignuo='true'");
+        header("Location:/bootproject/index.php?justsignup='true'");
+        exit();
+    }
+} else {
+}
+?>
 
 <!doctype html>
 <html lang="en">
@@ -22,31 +46,57 @@ if (session_status() == 1)
     <?php include "components/_header.php"; ?>
 
 
-    <?php include "components/_slider.php" ?>
-    <hr class="my-4">
-    <div class="container my-2">
+    <div class="container">
+        <h3>Location</h3>
+        <iframe src="https://maps.google.com/maps?q=Majura+Gate,+Surat,+Gujarat,+India&output=embed" width="100%" height="450" frameborder="0" style="border:0;margin: bottom 15px;" allowfullscreen></iframe>
+    </div>
 
+    <div class="container my-3">
         <div class="row">
-            <div class="col-lg-4">
-                <img src="https://source.unsplash.com/140x140/?code,php">
-                <h2>Heading</h2>
-                <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
-                <p><a class="btn btn-secondary" href="#">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-                <img src="https://source.unsplash.com/140x140/?code,php">
-                <h2>Heading</h2>
-                <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
-                <p><a class="btn btn-secondary" href="#">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-                <img src="https://source.unsplash.com/140x140/?code,php">
-                <h2>Heading</h2>
-                <p>And lastly this, the third column of representative placeholder content.we've moved on to the second column.</p>
-                <p><a class="btn btn-secondary" href="#">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-        </div>
+            <div class="col">
+                <div class="container">
+                    <form action="contact_us.php" method="POST">
+                        <h5 for="formHeader">Fill the form if you have any query</h5>
+                        <div class="mb-3">
+                            <input type="username" class="form-control" placeholder="Your Name" id="username" name="username" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" placeholder="Your email" class="form-control" id="email" name="email">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" placeholder="Subject" class="form-control" id="subject" name="subject">
+                        </div>
+                        <div class="mb-3">
+                            <textarea name="message" id="message" placeholder="Write down the message" cols="68" rows="5"></textarea>
 
+                        </div>
+                        <button type="submit" name="submitForm" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col">
+                <div class="container">
+                    <div class="col-2">
+                        <h5>Contact</h5>
+                            <ul class="nav flex-column">
+                                <li class="nav-item mb-4"><a href="https://www.google.com/maps?q=Majura+Gate,+Surat,+Gujarat,+India" target="new" class="nav-link p-0 text-muted">
+                                        <label for="email">institute Location</label>
+                                        <i class="fa fa-map-marker"></i> Majura Gate,Surat</a></li>
+
+                                <li class="nav-item mb-4"><a href="mailto:gecsrt612@gmail.com" class="nav-link p-0 text-muted">
+                                        <label for="email">institute Email</label>
+                                        <i class="fa fa-envelope"></i> gecsrt612@gmail.com </a></li>
+
+
+                                <li class="nav-item mb-4"><a href="tel:2655799" class="nav-link p-0 text-muted">
+                                        <label for="phone number">institute Telepohone</label>
+                                        <i class="fa fa-phone"></i> 2655799</a></li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 

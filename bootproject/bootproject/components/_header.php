@@ -235,8 +235,8 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['signup'])) {
         <!-- Academic-->
         <li class="nav-item px-1 dropdown">
           <a class="nav-link dropdown-toggle font-weight-bold text-uppercase <?php if ($file == 'department.php') {
-                                                                                                                                                                                echo 'active';
-                                                                                                                                                                            } ?>" href="department.php" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Academic</a>
+                                                                                echo 'active';
+                                                                              } ?>" href="department.php" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Academic</a>
           <div class="dropdown-menu dropdown-menu-center" aria-labelledby="servicesDropdown" style="border: solid #eaafc8 3px;" style="width: 300px;">
             <!-- Academic Title -->
             <div class="dropdown-header font-weight-bold text-uppercase" href="department.php" style="display: flex; justify-content: center; align-items: center;">Academic</div>
@@ -249,27 +249,12 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['signup'])) {
                 <a class="dropdown-item" href="#">Academic Calendar</a>
                 <div class="dropdown-divider"></div>
 
-                <a class="dropdown-item" href="#">Labs</a>
+                <a class="dropdown-item" href="Labs.php">Labs</a>
                 <div class="dropdown-divider"></div>
 
                 <a class="dropdown-item" href="#">Workshops</a>
                 <div class="dropdown-divider"></div>
               </div>
-
-              <!-- <div>
-                <div class="dropdown-header">Department</div>
-                <a class="dropdown-item" href="#">Applied Mechanics</a>
-                <a class="dropdown-item" href="#">Automobile Enginnering</a>
-                <a class="dropdown-item" href="#">Civil Enginnering</a>
-                <a class="dropdown-item" href="#">Electrical Enginnering</a>
-                <a class="dropdown-item" href="#">General</a>
-                <a class="dropdown-item" href="#">Information Techonology</a>
-                <a class="dropdown-item" href="#">Mechanical Enginnering</a>
-                <a class="dropdown-item" href="#">Metallurgy Enginnering</a>
-                <a class="dropdown-item" href="#">Power Electronics</a>
-                <a class="dropdown-item" href="#">Textile Manufacturing</a>
-                <a class="dropdown-item" href="#">Textile Processing</a>
-              </div> -->
             </div>
           </div>
         </li>
@@ -277,8 +262,8 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['signup'])) {
 
         <!-- People -->
         <li class="nav-item px-1 dropdown <?php if ($file == 'Faculty.php') {
-                                                                                                                                                                                        echo 'active';
-                                                                                                                                                                                    } ?>"><a class="nav-link dropdown-toggle font-weight-bold text-uppercase" href="/bootproject/Faculty.php?category=faculty" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">People</a>
+                                            echo 'active';
+                                          } ?>"><a class="nav-link dropdown-toggle font-weight-bold text-uppercase" href="/bootproject/Faculty.php?category=faculty" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">People</a>
           <div class="dropdown-menu dropdown-menu-center" aria-labelledby="servicesDropdown" style="border: solid #eaafc8 3px;">
             <!-- People Title -->
             <div class="dropdown-header font-weight-bold text-uppercase" href="#" style="display: flex; justify-content: center; align-items: center;">People</div>
@@ -302,14 +287,18 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['signup'])) {
 
         <!-- Gallary -->
         <li class="nav-item px-1"><a href="/bootproject/gallary.php" class="nav-link font-weight-bold text-uppercase <?php if ($file == 'gallary.php') {
-                                                                                                                                                                            echo 'active';
-                                                                                                                                                                        } ?>">Gallery</a></li>
+                                                                                                                        echo 'active';
+                                                                                                                      } ?>">Gallery</a></li>
 
 
         <!-- Downloads  -->
         <li class="nav-item px-1"><a href="/bootproject/downloads.php" class="nav-link font-weight-bold text-uppercase <?php if ($file == 'downloads.php') {
-                                                                                                                                                                            echo 'active';
-                                                                                                                                                                        } ?><">Downloads</a></li>
+                                                                                                                          echo 'active';
+                                                                                                                        } ?><">Downloads</a></li>
+        <!-- Contacts us -->
+        <li class="nav-item px-1"><a href="/bootproject/contact_us.php" class="nav-link font-weight-bold text-uppercase <?php if ($file == 'contact_us.php') {
+                                                                                                                          echo 'active';
+                                                                                                                        } ?><">contact us</a></li>
 
 
         <!-- Login  -->
@@ -365,6 +354,8 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['signup'])) {
   </div>
 </div>' ?>
 
+
+
   <!-- This Modal Will be poped Up when user clicks On Profile name  -->
   <div class="modal fade modal-dialog modal-dialog-scrollable" id="profileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -418,6 +409,7 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['signup'])) {
         </div>
         <!-- to this  -->
         <div class="modal-footer">
+          <a href="editDetails.php?sno=<?php echo $tbrow['sno'] ?>"> <button type="button" class="btn btn-warning" >Edit <?php echo $tbrow['username']; ?></button> </a>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>

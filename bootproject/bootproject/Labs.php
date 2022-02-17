@@ -1,42 +1,43 @@
 <?php
-if (session_status() == 1)
-    session_start();
-$haschanged = false;
-include 'components/_db_connect.php';
+
+session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+}
+include 'components/_db_connect.php';
+if (isset($_POST['labInsertButton'])) {
 
-    if (isset($_POST['editeddeptname'])) {
-        $deptname = $_POST['editeddeptname'];
-        $deptid = $_POST['deptid'];
-        $sql = "UPDATE `tb_dept` SET `dept_name` ='$deptname' WHERE `tb_dept`.`dept_id` = '$deptid'";
-        $result = mysqli_query($conn, $sql);
-
-        if (!$result) {
-            $haschanged = $deptname;
-        } else {
-            $haschanged = $deptname;
-        }
-    } else if (isset($_POST['editeddeptdesc'])) {
-        $deptdesc = $_POST['editeddeptdesc'];
-        $deptid = $_POST['deptid'];
-        $sql = "UPDATE `tb_dept` SET `dept_desc` ='$deptdesc' WHERE `tb_dept`.`dept_id` = '$deptid'";
-        $result = mysqli_query($conn, $sql);
-        if (!$result) {
-            $haschanged = 'description';
-        } else {
-            $haschanged = 'description';
-        }
+    $labId = $_POST['labId'];
+    $labName = $_POST['labName'];
+    $deptId = $_POST['deptId'];
+    $labDesc = $_POST['labDesc'];
+    $name = $_FILES['labImage']['name'];
+    $tmp = $_FILES['labImage']['tmp_name'];
+    move_uploaded_file($tmp, "resorces/" . $name);
+    $path = pathinfo($name);
+    $target_dir = "resources/";
+    $ext = $path['extension'];
+    $path_filename_ext = $target_dir . $name;
+    if(move_uploaded_file($tmp,$path_filename_ext)){
+        $sql = "INSERT INTO `deptLab` (`labId`, `deptId`, `labName`, `labImage`, `labDesc`) VALUES ('$labId', '$deptId', '$labName', '$name', '$labDesc')";
+        mysqli_query($conn, $sql);
+        echo mysqli_error($conn);
     }
 }
-?>
-<?php
-include 'components/_db_connect.php';
-$sql = "SELECT * FROM tb_dept";
+
+$sql = "SELECT * FROM deptLab";
 $result = mysqli_query($conn, $sql);
 $numofrow = mysqli_num_rows($result);
+$deptname = $_GET['deptname'];
+$deptidquery = "SELECT * FROM `tb_dept` WHERE `dept_name` LIKE '$deptname'";
+$deptidResult = mysqli_query($conn, $deptidquery);
+$deptiRow = mysqli_fetch_assoc($deptidResult);
+$deptId = $deptiRow['dept_id'];
+$deptName = $deptiRow['dept_name'];
+?>
+<?php
+
 
 ?>
-
 <!doctype html>
 <html lang="en">
 
@@ -71,19 +72,19 @@ $numofrow = mysqli_num_rows($result);
             <div class="container marketing my-2">
                 <div class="row featurette">
                     <div class="col-md-7 order-md-2">
-                        <!-- <h2 class="featurette-heading"><?php echo $row['dept_name']; ?> <span class="text-muted">id.<?php echo $row['dept_id']; ?></span></h2> -->
-                        <h4 id="scrollspyHeading1 featurette-heading"><?php echo $row['dept_name']; ?><span class="text-muted">id.<?php echo $row['dept_id']; ?></span></h4>
-                        <!-- <p class="lead"><?php $str = get60Words($row['dept_desc']);
+                        <h4 id="scrollspyHeading1 featurette-heading"><?php echo $row['labName']; ?><span class="text-muted">id.<?php echo $row['labId']; ?></span></h4>
+                        <!-- <p class="lead"><?php $str = get60Words($row['labDesc']);
                                                 echo $str;
                                                 ?>...</p> -->
-                        <p class="lead"><?php $str = get60Words($row['dept_desc']);
-                                        echo $str;
+                        <p class="lead"><?php $str = get60Words($row['labDesc']);
+                                        echo substr($row['labDesc'], 0, 100);
                                         ?>...</p>
-                        <p><a class="btn btn-secondary" href="departmentdetail.php?deptname=<?php echo $row['dept_name']; ?>">Read more»</a></p>
+                        <p><a class="btn btn-secondary" href="departmentLabs.php?deptId=<?php echo $row['deptId']; ?>">Read more»</a></p>
                     </div>
                     <div class="col-md-5">
-                        <img src="https://source.unsplash.com/250x250/?<?php echo $row['dept_name'] ?>">
-
+                        <?php
+                        echo '<img width="225" height="225" alter="'.$row['labImage'].'" src="resources/' . $row['labImage'] . '" >';
+                        ?>
                     </div>
                 </div>
             </div>
@@ -91,15 +92,16 @@ $numofrow = mysqli_num_rows($result);
             <div class="container marketing my-2">
                 <div class="row featurette">
                     <div class="col-md-7">
-                        <!-- <h2 class="featurette-heading"><?php echo $row['dept_name']; ?> <span class="text-muted">id.<?php echo $row['dept_id']; ?></span></h2> -->
-                        <h4 id="scrollspyHeading1 featurette-heading"><?php echo $row['dept_name']; ?><span class="text-muted">id.<?php echo $row['dept_id']; ?></span></h4>
-                        <p class="lead"><?php $str = get60Words($row['dept_desc']);
-                                        echo $str;
+                        <h4 id="scrollspyHeading1 featurette-heading"><?php echo $row['labName']; ?><span class="text-muted">id.<?php echo $row['labId']; ?></span></h4>
+                        <p class="lead"><?php $str = get60Words($row['labDesc']);
+                                        echo substr($row['labDesc'], 0, 100);
                                         ?>....</p>
-                        <p><a class="btn btn-secondary" href="departmentdetail.php?deptname=<?php echo $row['dept_name']; ?>">Read more»</a></p>
+                        <p><a class="btn btn-secondary" href="departmentLabs.php?deptId=<?php echo $row['deptId']; ?>">Read more»</a></p>
                     </div>
                     <div class="col-md-5">
-                        <img src="https://source.unsplash.com/250x250/?<?php echo $row['dept_name'] ?>">
+                        <?php
+                        echo '<img width="225" height="225" src="resources/' . $row['labImage'] . '" >';
+                        ?>
 
                     </div>
                 </div>
@@ -109,10 +111,83 @@ $numofrow = mysqli_num_rows($result);
     } ?>
     </div>
     </div>
-
-
+    <div class="container">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#labInsert">
+            Insert lab in database
+        </button>
+    </div>
 
     <?php include 'components/_footer.php' ?>
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="labInsert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- <form action="index.php"  method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">enter the labId</label>
+                            <input type="number" class="form-control" id="labid" name="labId" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">department id</label>
+                            <input type="number" class="form-control" id="deptId" name="deptId">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Lab Namne</label>
+                            <input type="text" class="form-control" id="labName" name="labName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">lab description </label>
+                            <input type="text" class="form-control" id="labDesc" name="labDesc">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Image" class="form-label">lab Image</label>
+                            <input type="file" name="labImage">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" name="labInsertButton" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form> -->
+                    <form action="Labs.php" method="POST" enctype="multipart/form-data">
+                        <div class=" mb-3">
+                            <label for="exampleInputEmail1" class="form-label">enter the labId</label>
+                            <input type="number" class="form-control" id="labid" name="labId" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">department id</label>
+                            <input type="number" class="form-control" id="deptId" name="deptId">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Lab Namne</label>
+                            <input type="text" class="form-control" id="labName" name="labName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">lab description </label>
+                            <input type="text" class="form-control" id="labDesc" name="labDesc">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Image" class="form-label">Image</label>
+                            <input type="file" name="labImage">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" name="labInsertButton" class="btn btn-primary">Save Changes</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -134,7 +209,7 @@ function get60Words(string $str)
     $words = str_word_count($str, 2);
     $cnt = 0;
     foreach ($words as $strPos => $v) {
-        if ($cnt++ === 60) {
+        if ($cnt++ === 30) {
             return substr($str, 0, $strPos - 1);
         }
     }
